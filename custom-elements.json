@@ -1,0 +1,105 @@
+{
+  "schemaVersion": "1.0.0",
+  "readme": "",
+  "modules": [
+    {
+      "kind": "javascript-module",
+      "path": "rpg-me.js",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "RPGMe",
+          "members": [
+            {
+              "kind": "field",
+              "name": "tag",
+              "static": true,
+              "readonly": true
+            },
+            {
+              "kind": "method",
+              "name": "_applySeedToSettings"
+            },
+            {
+              "kind": "method",
+              "name": "_generateSeed"
+            },
+            {
+              "kind": "method",
+              "name": "_updateSetting",
+              "parameters": [
+                {
+                  "name": "key"
+                },
+                {
+                  "name": "value"
+                }
+              ]
+            },
+            {
+              "kind": "field",
+              "name": "title",
+              "type": {
+                "text": "string"
+              },
+              "default": "\"Design an RPG Character to Your Liking!\""
+            },
+            {
+              "kind": "field",
+              "name": "characterSettings",
+              "privacy": "public",
+              "type": {
+                "text": "object"
+              },
+              "default": "{ seed: \"00000000\", base: 0, face: 0, faceitem: 0, hair: 0, pants: 0, shirt: 0, skin: 0, size: 300, name: \"\", fire: false, walking: false, hatColor: 0, glasses: false, }",
+              "attribute": "characterSettings"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "characterSettings",
+              "type": {
+                "text": "object"
+              },
+              "default": "{ seed: \"00000000\", base: 0, face: 0, faceitem: 0, hair: 0, pants: 0, shirt: 0, skin: 0, size: 300, name: \"\", fire: false, walking: false, hatColor: 0, glasses: false, }",
+              "fieldName": "characterSettings"
+            }
+          ],
+          "mixins": [
+            {
+              "name": "DDDSuper",
+              "package": "@haxtheweb/d-d-d/d-d-d.js"
+            },
+            {
+              "name": "I18NMixin",
+              "package": "@haxtheweb/i18n-manager/lib/I18NMixin.js"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "RPGMe",
+          "declaration": {
+            "name": "RPGMe",
+            "module": "rpg-me.js"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "declaration": {
+            "name": "RPGMe",
+            "module": "rpg-me.js"
+          }
+        }
+      ]
+    }
+  ]
+}
