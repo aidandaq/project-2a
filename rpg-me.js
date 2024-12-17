@@ -291,7 +291,7 @@ static get styles() {
         this.characterSettings = { ...this.characterSettings, [key]: value };
         this._generateSeed();
         this.requestUpdate();
-      } /** 
+      } 
 
       createShareableLink() {
         const baseUrl = window.location.href.split("?")[0]
@@ -322,8 +322,8 @@ static get styles() {
           this.characterSettings.seed = params.get("seed");
           this._applySeedToSettings();
         } 
-        this.requestUpdate(); */
-      
+        this.requestUpdate(); 
+      }
     }
     
 customElements.define(RPGMe.tag, RPGMe);
