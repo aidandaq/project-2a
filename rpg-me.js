@@ -117,6 +117,8 @@ static get styles() {
             font-size: 1.5rem;
             margin-bottom: 10px;
             }
+            .copied-notification {
+              opacity: 1;}
             
         `,
         ];
@@ -254,8 +256,8 @@ static get styles() {
             @change="${(e) => this._updateSetting('glasses', e.target.checked)}"
           >Glasses</wired-checkbox>
 
-          <button @click="${this._generateShareLink}">
-            Generate Share Link
+          <button @click="${this.createShareableLink}">
+            Send to your Friends!
           </button>
         </div>
       </div>
