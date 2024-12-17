@@ -2,12 +2,13 @@ import { LitElement, html, css } from "lit";
 import { DDDSuper } from "@haxtheweb/d-d-d/d-d-d.js";
 import { I18NMixin } from "@haxtheweb/i18n-manager/lib/I18NMixin.js";
 import "@haxtheweb/rpg-character/rpg-character.js";
-import "wired-elements";
+import { WiredButton, WiredInput } from "wired-elements";
 
 export class RPGMe extends DDDSuper(I18NMixin(LitElement)) {
     static get tag() {
         return "rpg-me";
 }
+
 constructor() {
     super();
     this.title = "Design an RPG Character to Your Liking!";
@@ -71,7 +72,7 @@ static get styles() {
                 top: -50px;
                 left: 50%;
                 transform: translateX(-50%);
-                background-color: rgba(0, 0, 0, 0.7);
+                background-color: var(--ddd-theme-default-potential0);
                 color: white;
                 padding: 5px 10px;
                 border-radius: 5px;
@@ -101,43 +102,28 @@ static get styles() {
             margin-top: 10px;
             padding: 10px 20px;
             cursor: pointer;
-            background-color: #007bff;
+            background-color: var(--ddd-theme-default-keystoneYellow);
             color: white;
-            border: 1px solid #0056b3;
+            border: 1px solid var(--ddd-theme-default-skyBlue);
             border-radius: 4px;
             font-size: 16px;
             transition: background-color 0.3s ease, border-color 0.3s ease;
             }
             button:hover {
-            background-color: #0056b3;
-            border-color: #004085;
+            background-color: var(--ddd-theme-default-limestoneGray);
+            border-color: var(--ddd-theme-default-info);
             }
             .character-name {
             font-size: 1.5rem;
             margin-bottom: 10px;
             }
-            .notification {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background-color: #28a745;
-            color: white;
-            padding: 10px 15px;
-            border-radius: 5px;
-            font-size: 14px;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-            opacity: 0;
-            transition: opacity 0.5s ease-in-out;
-            z-index: 1000;
-            }
-            .notification.show {
-            opacity: 1;
-            }
+            
         `,
         ];
     }
 
   render() {
+    console.log("here")
     return html`
       <div class="container">
         <div class="character-preview">
@@ -154,6 +140,7 @@ static get styles() {
             hatColor="${this.characterSettings.hatColor}"
             .fire="${this.characterSettings.fire}"
             .walking="${this.characterSettings.walking}"
+            .glasses="${this.characterSettings.glasses}"
             style="
               --character-size: ${this.characterSettings.size}px;
               --hat-color: hsl(${this.characterSettings.hatColor}, 100%, 50%);
@@ -262,6 +249,11 @@ static get styles() {
             @change="${(e) => this._updateSetting('walking', e.target.checked)}"
           >Walking</wired-checkbox>
 
+          <wired-checkbox
+            ?checked="${this.characterSettings.glasses}"
+            @change="${(e) => this._updateSetting('glasses', e.target.checked)}"
+          >Glasses</wired-checkbox>
+
           <button @click="${this._generateShareLink}">
             Generate Share Link
           </button>
@@ -299,9 +291,39 @@ static get styles() {
         this.characterSettings = { ...this.characterSettings, [key]: value };
         this._generateSeed();
         this.requestUpdate();
+      } /** 
+
+      createShareableLink() {
+        const baseUrl = window.location.href.split("?")[0]
+        const params = new URLSearchParams({ seed: this.characterSettings.seed }).toString();
+        const shareableLink = `${baseUrl}?${params}`;
+
+        navigator.clipboard.writeText(shareLink).then(
+          () => this.copiedNotification("Link Copied to Clipboard!"),
+          (err) => this.copiedNotification("Failed to copy link to clipboard.")
+        );
       }
-    
+
+      copiedNotification(message) {
+        const notification = this.shadowRoot.getElemenetById("notification");
+        notification.textContent = message;
+        notification.classList.add("show");
+        setTimeout(() => {
+          notification.classList.remove("show");
+        }, 2000);
 
       }
+
+      connectedCallback() {
+        super.connectedCallback();
+        const params = new URLSearchParams(window.location.search);
+
+        if (params.has("seed")) {
+          this.characterSettings.seed = params.get("seed");
+          this._applySeedToSettings();
+        } 
+        this.requestUpdate(); */
+      
+    }
     
 customElements.define(RPGMe.tag, RPGMe);
