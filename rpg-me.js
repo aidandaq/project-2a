@@ -172,7 +172,7 @@ static get styles() {
             ?checked="${this.characterSettings.base === 1}"
             @change="${(e) =>
               this.updateSetting('base', e.target.checked ? 1 : 0)}"
-            >Has Hair</wired-checkbox
+            >Hair?</wired-checkbox
           >
 
           <label for="size">Avatar Size:</label>
