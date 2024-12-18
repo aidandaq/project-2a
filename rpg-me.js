@@ -28,7 +28,7 @@ constructor() {
         hatColor: 0,
         glasses: false,
     };
-    this._applySeedToSettings(); 
+    this.applySeedToSettings(); 
 
 }
 
@@ -81,44 +81,51 @@ static get styles() {
                 pointer-events: none;
             }
             .controls {
-            flex: 1;
-            min-width: 300px;
-            text-align: left;
-            }
-            wired-input,
-            wired-checkbox,
-            wired-slider {
-            display: block;
-            margin-bottom: 15px;
-            max-width: 300px;
+                flex: 1;
+                min-width: 300px;
+                text-align: left;
+                }
+                wired-input,
+                wired-checkbox,
+                wired-slider {
+                display: block;
+                margin-bottom: 15px;
+                max-width: 300px;
             }
             label {
-            display: block;
-            font-size: 14px;
-            font-weight: bold;
-            margin-bottom: 5px;
+                display: block;
+                font-size: 14px;
+                font-weight: bold;
+                margin-bottom: 5px;
             }
             button {
-            margin-top: 10px;
-            padding: 10px 20px;
+                margin-top: 10px;
+                padding: 10px 20px; 
             cursor: pointer;
-            background-color: var(--ddd-theme-default-keystoneYellow);
-            color: white;
-            border: 1px solid var(--ddd-theme-default-skyBlue);
-            border-radius: 4px;
-            font-size: 16px;
-            transition: background-color 0.3s ease, border-color 0.3s ease;
+                background-color: var(--ddd-theme-default-limestoneGray);
+                color: white;
+                border: 1px solid var(--ddd-theme-default-skyBlue);
+                border-radius: 4px;
+                font-size: 16px;
+                transition: background-color 0.3s ease, border-color 0.3s ease;
             }
             button:hover {
-            background-color: var(--ddd-theme-default-limestoneGray);
-            border-color: var(--ddd-theme-default-info);
+                background-color: var(--ddd-theme-default-keystoneYellow);
+                border-color: var(--ddd-theme-default-info);
             }
             .character-name {
-            font-size: 1.5rem;
-            margin-bottom: 10px;
+                font-size: 1.5rem;
+                margin-bottom: 10px;
             }
-            .copied-notification {
-              opacity: 1;}
+            .notification {
+              position: absolute;
+              background-color: var(--ddd-theme-default-limestoneGray);
+              color: var(--ddd-theme-default-potentialMidnight);
+              font-size: 12px;
+              border-radius: var(--ddd-spacing-1);
+            }
+            .notification.show {
+                opacity: 1;}
             
         `,
         ];
@@ -151,12 +158,12 @@ static get styles() {
           </div>
 
           <div class="controls">
-          <label for="characterNameInput">Character Name:</label>
+          <label for="characterNameInput">Avatar Name:</label>
           <wired-input
             id="characterNameInput"
             type="text"
             placeholder="Enter character name"
-            @input="${(e) => this._updateSetting('name', e.target.value)}"
+            @input="${(e) => this.updateSetting('name', e.target.value)}"
           ></wired-input>
 
           <label for="hairToggle">Hair:</label>
@@ -164,18 +171,19 @@ static get styles() {
             id="hairToggle"
             ?checked="${this.characterSettings.base === 1}"
             @change="${(e) =>
-              this._updateSetting('base', e.target.checked ? 1 : 0)}"
+              this.updateSetting('base', e.target.checked ? 1 : 0)}"
             >Has Hair</wired-checkbox
           >
 
-          <label for="size">Character Size:</label>
+          <label for="size">Avatar Size:</label>
           <wired-slider
             id="size"
             value="${this.characterSettings.size}"
             min="100"
             max="600"
-            @change="${(e) => this._updateSetting('size', parseInt(e.detail.value))}"
+            @change="${(e) => this.updateSetting('size', parseInt(e.detail.value))}"
           ></wired-slider>
+
 
           <label for="face">Face:</label>
           <wired-slider
@@ -183,52 +191,57 @@ static get styles() {
             value="${this.characterSettings.face}"
             min="0"
             max="5"
-            @change="${(e) => this._updateSetting('face', parseInt(e.detail.value))}"
+            @change="${(e) => this.updateSetting('face', parseInt(e.detail.value))}"
           ></wired-slider>
           
-          <label for="faceitem">Face Item:</label>
+
+          <label for="faceitem">Face Accessory:</label>
           <wired-slider
             id="faceitem"
             value="${this.characterSettings.faceitem}"
             min="0"
             max="9"
-            @change="${(e) => this._updateSetting('faceitem', parseInt(e.detail.value))}"
+            @change="${(e) => this.updateSetting('faceitem', parseInt(e.detail.value))}"
           ></wired-slider>
 
-          <label for="hair">Hair Style:</label>
+
+          <label for="hair">Hairdo:</label>
           <wired-slider
             id="hair"
             value="${this.characterSettings.hair}"
             min="0"
             max="9"
-            @change="${(e) => this._updateSetting('hair', parseInt(e.detail.value))}"
+            @change="${(e) => this.updateSetting('hair', parseInt(e.detail.value))}"
           ></wired-slider>
 
-          <label for="pants">Pants Style:</label>
+
+          <label for="pants">Pantaloons:</label>
           <wired-slider
             id="pants"
             value="${this.characterSettings.pants}"
             min="0"
             max="9"
-            @change="${(e) => this._updateSetting('pants', parseInt(e.detail.value))}"
+            @change="${(e) => this.updateSetting('pants', parseInt(e.detail.value))}"
           ></wired-slider>
 
-          <label for="shirt">Shirt Style:</label>
+
+          <label for="shirt">Shirt:</label>
           <wired-slider
             id="shirt"
             value="${this.characterSettings.shirt}"
             min="0"
             max="9"
-            @change="${(e) => this._updateSetting('shirt', parseInt(e.detail.value))}"
+            @change="${(e) => this.updateSetting('shirt', parseInt(e.detail.value))}"
           ></wired-slider>
 
-          <label for="skin">Skin Tone:</label>
+
+          <label for="skin">Skin Color:</label>
           <wired-slider
             id="skin"
             value="${this.characterSettings.skin}"
             min="0"
             max="9"
-            @change="${(e) => this._updateSetting('skin', parseInt(e.detail.value))}"
+            @change="${(e) => this.updateSetting('skin', parseInt(e.detail.value))}"
           ></wired-slider>
 
 
@@ -238,34 +251,39 @@ static get styles() {
             value="${this.characterSettings.hatColor}"
             min="0"
             max="9"
-            @change="${(e) => this._updateSetting('hatColor', parseInt(e.detail.value))}"
+            @change="${(e) => this.updateSetting('hatColor', parseInt(e.detail.value))}"
           ></wired-slider>
+
 
           <wired-checkbox
             ?checked="${this.characterSettings.fire}"
-            @change="${(e) => this._updateSetting('fire', e.target.checked)}"
+            @change="${(e) => this.updateSetting('fire', e.target.checked)}"
           >On Fire</wired-checkbox>
+
 
           <wired-checkbox
             ?checked="${this.characterSettings.walking}"
-            @change="${(e) => this._updateSetting('walking', e.target.checked)}"
+            @change="${(e) => this.updateSetting('walking', e.target.checked)}"
           >Walking</wired-checkbox>
+
 
           <wired-checkbox
             ?checked="${this.characterSettings.glasses}"
-            @change="${(e) => this._updateSetting('glasses', e.target.checked)}"
+            @change="${(e) => this.updateSetting('glasses', e.target.checked)}"
           >Glasses</wired-checkbox>
 
+
           <button @click="${this.createShareableLink}">
-            Send to your Friends!
+            Send your Avatar to your Friends!
           </button>
         </div>
       </div>
+      <div id="notification" class="notification"></div>
       
     `;
   }
 
-  _applySeedToSettings() {
+  applySeedToSettings() {
     const seed = this.characterSettings.seed;
     const paddedSeed = seed.padStart(8, "0").slice(0, 8);
     const values = paddedSeed.split("").map((v) => parseInt(v, 10));
@@ -281,27 +299,28 @@ static get styles() {
       this.characterSettings.hatColor,
     ] = values;
   
-    this.requestUpdate(); // Ensure UI updates after applying settings
+
+    this.requestUpdate(); 
 };
 
-    _generateSeed() {
+       generateSeed() {
         const { base, face, faceitem, hair, pants, shirt, skin, hatColor } = this.characterSettings;
         this.characterSettings.seed = `${base}${face}${faceitem}${hair}${pants}${shirt}${skin}${hatColor}`;
       }
     
-      _updateSetting(key, value) {
+      updateSetting(key, value) {
         this.characterSettings = { ...this.characterSettings, [key]: value };
-        this._generateSeed();
+        this.generateSeed();
         this.requestUpdate();
       } 
 
       createShareableLink() {
-        const baseUrl = window.location.href.split("?")[0]
+        const baseUrl = window.location.href.split("?")[0];
         const params = new URLSearchParams({ seed: this.characterSettings.seed }).toString();
         const shareableLink = `${baseUrl}?${params}`;
 
-        navigator.clipboard.writeText(shareLink).then(
-          () => this.copiedNotification("Link Copied to Clipboard!"),
+        navigator.clipboard.writeText(shareableLink).then(
+          () => this.copiedNotification("Link Copied to Clipboard"),
           (err) => this.copiedNotification("Failed to copy link to clipboard.")
         );
       }
@@ -318,11 +337,13 @@ static get styles() {
 
       connectedCallback() {
         super.connectedCallback();
+
+
         const params = new URLSearchParams(window.location.search);
 
         if (params.has("seed")) {
           this.characterSettings.seed = params.get("seed");
-          this._applySeedToSettings();
+          this.applySeedToSettings();
         } 
         this.requestUpdate(); 
       }
