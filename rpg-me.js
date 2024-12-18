@@ -21,7 +21,7 @@ constructor() {
         pants: 0,
         shirt: 0,
         skin: 0,
-        size: 300,
+        size: 200,
         name: "",
         fire: false,
         walking: false,
@@ -158,11 +158,11 @@ static get styles() {
           </div>
 
           <div class="controls">
-          <label for="characterNameInput">Avatar Name:</label>
+          <label for="nameInput">Avatar Name:</label>
           <wired-input
-            id="characterNameInput"
+            id="nameInput"
             type="text"
-            placeholder="Enter character name"
+            placeholder="Enter Avatar name"
             @input="${(e) => this.updateSetting('name', e.target.value)}"
           ></wired-input>
 
@@ -180,7 +180,7 @@ static get styles() {
             id="size"
             value="${this.characterSettings.size}"
             min="100"
-            max="600"
+            max="500"
             @change="${(e) => this.updateSetting('size', parseInt(e.detail.value))}"
           ></wired-slider>
 
